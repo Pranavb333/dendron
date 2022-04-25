@@ -1,4 +1,4 @@
-import { Time } from "@dendronhq/common-all";
+import { GraphThemeEnum, Time } from "@dendronhq/common-all";
 import fs from "fs-extra";
 import _ from "lodash";
 import os from "os";
@@ -65,6 +65,10 @@ type Metadata = Partial<{
    *
    */
   workspaceActivationContext: WorkspaceActivationContext;
+  /**
+   * default Theme for Note Graph View
+   */
+  defaultGraphTheme: GraphThemeEnum;
 }>;
 
 export enum InactvieUserMsgStatusEnum {
@@ -138,7 +142,7 @@ export class MetadataService {
 
     return featureShowcaseData[key];
   }
-  
+
   getGlobalVersion() {
     return this.getMeta().version || "0.0.0";
   }
@@ -152,6 +156,10 @@ export class MetadataService {
       this.getMeta().workspaceActivationContext ??
       WorkspaceActivationContext.normal
     );
+  }
+
+  getDefaultGraphTheme() {
+    return this.getMeta().defaultGraphTheme ?? GraphThemeEnum.Default;
   }
 
   setMeta(key: keyof Metadata, value: any) {
@@ -224,5 +232,12 @@ export class MetadataService {
 
   setActivationContext(context: WorkspaceActivationContext) {
     this.setMeta("workspaceActivationContext", context);
+  }
+
+  setDefaultGraphTheme(defaultGraphTheme: GraphThemeEnum) {
+    const meta = this.getMeta();
+    if (meta.defaultGraphTheme !== defaultGraphTheme) {
+      this.setMeta("defaultGraphTheme", defaultGraphTheme);
+    }
   }
 }
