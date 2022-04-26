@@ -66,9 +66,9 @@ type Metadata = Partial<{
    */
   workspaceActivationContext: WorkspaceActivationContext;
   /**
-   * Theme for Note Graph View
+   * Default Theme for Note Graph View
    */
-  graphTheme?: GraphThemeEnum;
+  defaultGraphTheme?: GraphThemeEnum;
 }>;
 
 export enum InactvieUserMsgStatusEnum {
@@ -158,8 +158,8 @@ export class MetadataService {
     );
   }
 
-  getGraphTheme() {
-    return this.getMeta().graphTheme;
+  getDefaultGraphTheme() {
+    return this.getMeta().defaultGraphTheme;
   }
 
   setMeta(key: keyof Metadata, value: any) {
@@ -234,10 +234,10 @@ export class MetadataService {
     this.setMeta("workspaceActivationContext", context);
   }
 
-  setGraphTheme(graphTheme: GraphThemeEnum) {
+  setDefaultGraphTheme(defaultGraphTheme: GraphThemeEnum) {
     const meta = this.getMeta();
-    if (meta.graphTheme !== graphTheme) {
-      this.setMeta("graphTheme", graphTheme);
+    if (meta.defaultGraphTheme !== defaultGraphTheme) {
+      this.setMeta("defaultGraphTheme", defaultGraphTheme);
     }
   }
 }
